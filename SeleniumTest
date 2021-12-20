@@ -1,0 +1,86 @@
+using NUnit.Framework;
+
+using OpenQA.Selenium;
+
+using OpenQA.Selenium.Chrome;
+
+using System;
+
+using System.IO;
+
+namespace SeleniumCsharp
+
+{
+
+    public class Tests
+
+    {
+
+        IWebDriver driver;
+
+        [OneTimeSetUp]
+
+        public void Setup()
+
+        {
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            driver = new ChromeDriver(path + @"\drivers\");
+        }
+
+        [Test]
+
+        public void aVerifyLogo()
+
+        {
+            driver.Navigate().GoToUrl("https://www.czc.cz/");
+            Assert.IsTrue(driver.FindElement(By.Id("print-logo")).Displayed);
+        }
+
+
+        [Test]
+        public void bFindItem()
+
+        {
+            IWebElement fulltext = driver.FindElement(By.Id("fulltext"));
+            fulltext.SendKeys("xbox series s");
+            fulltext.SendKeys(Keys.Enter);
+        }
+
+
+        [Test]
+        public void cOpenItem()
+        {
+            IWebElement item = driver.FindElement(By.XPath("//a[@title='Xbox Series S, 512GB, bílá']"));
+            item.Click();
+        }
+
+
+        [Test]
+        public void dAddToCart()
+        {
+            IWebElement cart = driver.FindElement(By.ClassName("btn-buy"));
+            cart.Click();
+        }
+
+
+        [Test]
+        public void eViewBasket ()
+        {
+            IWebElement view = driver.FindElement(By.ClassName("view-basket"));
+            view.Click();
+
+        }
+
+
+        /*
+        [OneTimeTearDown]
+
+        public void TearDown()
+
+        {
+            driver.Quit();
+        }
+        */
+    }
+
+}
