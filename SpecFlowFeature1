@@ -1,0 +1,11 @@
+Feature: SpecFlowFeature1
+	Simple calculator for adding two numbers
+
+@mytag
+Scenario: Search Item
+	Given goToWebPage
+	And findLogo
+	And insertText
+	And selectItem
+	And addItemToCart
+	And viewBaskt
