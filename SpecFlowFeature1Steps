@@ -1,0 +1,62 @@
+using System;
+using TechTalk.SpecFlow;
+
+using NUnit.Framework;
+
+using OpenQA.Selenium;
+
+using OpenQA.Selenium.Chrome;
+
+using System.IO;
+
+namespace TestProject1
+{
+    [Binding]
+    public class SpecFlowFeature1Steps
+    {
+
+        static string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+        IWebDriver driver = new ChromeDriver(path + @"\drivers\");
+
+        [Given(@"goToWebPage")]
+        public void GivengoToWebPage()
+        {
+            driver.Navigate().GoToUrl("https://www.czc.cz/");
+           
+        }
+        [Given(@"findLogo")]
+        public void GivenFindLogo()
+        {
+            Assert.IsTrue(driver.FindElement(By.Id("print-logo")).Displayed);
+        }
+        
+        [Given(@"insertText")]
+        public void GivenInsertText()
+        {
+            IWebElement fulltext = driver.FindElement(By.Id("fulltext"));
+            fulltext.SendKeys("xbox series s");
+            fulltext.SendKeys(Keys.Enter);
+        }
+        
+        [Given(@"selectItem")]
+        public void GivenSelectItem()
+        {
+            IWebElement item = driver.FindElement(By.XPath("//a[@title='Xbox Series S, 512GB, bílá']"));
+            item.Click();
+        }
+        
+        [Given(@"addItemToCart")]
+        public void GivenAddItemToCart()
+        {
+            IWebElement cart = driver.FindElement(By.ClassName("btn-buy"));
+            cart.Click();
+        }
+        
+        [Given(@"viewBaskt")]
+        public void GivenViewBaskt()
+        {
+            IWebElement view = driver.FindElement(By.ClassName("view-basket"));
+            view.Click();
+        }
+    }
+}
